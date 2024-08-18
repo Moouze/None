@@ -2,6 +2,7 @@ package com.moouuze.none.controller;
 
 import com.moouuze.none.model.Postagem;
 import com.moouuze.none.repository.PostagemRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,4 +35,9 @@ public class PostagemController {
         return ResponseEntity.ok(postagemRepository.findAllByTituloContainingIgnoreCase(titulo));
     }
 
+    @PostMapping
+    public ResponseEntity<Postagem> post(@Valid @RequestBody Postagem postagem) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(postagemRepository.save(postagem));
+    }
 }
